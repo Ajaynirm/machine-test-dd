@@ -1,0 +1,33 @@
+.login-container{
+    display: flex;
+    height: 500px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+
+    /* for debugging purpose i used background color property */
+    /* background-color: aqua; */
+
+}
+.sub-container{
+    width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px;
+    gap: 20px;
+    /* background-color: black; */
+}
+.sub-container-alert{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px;
+}
+.input-box{
+    height: 30px;
+    width: 400px;
+}

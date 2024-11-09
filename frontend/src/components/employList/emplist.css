@@ -1,0 +1,29 @@
+.employ-grid{
+    max-width: 1000px;
+    margin: 50px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.employ-header{
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 3fr;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+}
+.grid-row{
+    display: grid;
+    grid-template-columns: 2fr 2fr 3fr 3fr 2fr 2fr 2fr 2fr 2fr 2fr;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+.employee-grid-row span {
+    padding: 5px 0;
+}
+
+.grid-row:last-child {
+    border-bottom: none;
+}
