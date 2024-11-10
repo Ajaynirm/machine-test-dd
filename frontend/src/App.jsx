@@ -19,11 +19,18 @@ function App() {
         </Route>
         <Route path='/admin' element={<AdminPanel />} >
         </Route>
-        <Route path='/createEmployee' element={<CreateEmp />} >
+        <Route path='/createEmp' element={<CreateEmp />} >
         </Route>
         <Route path='/emplist' element={<EmployeeList />} >
         </Route>
         <Route path='/empedit' element={<EmployeEdit />} >
+        </Route>
+
+        <Route path="/main-page" element={<AdminPanel />} >
+        </Route>
+        <Route path="/emplist" element={<EmployeeList />} >
+        </Route>
+        <Route path="/login-page" element={<Login />} >
         </Route>
       </Routes>
     </BrowserRouter>

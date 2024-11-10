@@ -1,10 +1,20 @@
 import React from 'react'
 import { useState,useEffect } from 'react';
 import './emplist.css'
+import { useNavigate } from 'react-router-dom';
 
 const EmployeeList = () => {
 
     const [employees, setEmployees] = useState([]);
+
+    const navigate = useNavigate();
+
+    const openEmployList = () => {
+     navigate('/emplist');
+    }
+    const handleLogout = () => {
+      navigate('/login-page');
+    }
 
     useEffect(() => {
         const getEmployeesFromDatabase = async () => {
@@ -27,9 +37,9 @@ const EmployeeList = () => {
         <div className="container">
             <div className='head-container'>
                 <div>Home</div>
-                <div>Employee List</div>
-                <div>Hukum Gupta Username</div>
-                <div> logout</div>
+                <div onClick={openEmployList}>Employee List</div>
+                <div>{localStorage.getItem('username')}</div>
+                <div onClick={handleLogout}> logout</div>
             </div>
             <div>Employee List</div>
            

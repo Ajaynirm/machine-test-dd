@@ -1,18 +1,26 @@
-.container{
+.login-container{
     display: flex;
+    /* height: 600px; */
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 10px;
-    background-color: blue;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+   
+
+    /* for debugging purpose i used background color property */
+    /* background-color: aqua; */
+
 }
 .sub-container{
-    width: 800px;
+    /* width: 800px; */
+    height: 60px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    margin: 10px;
-    gap: 10px;
+    margin: 0px;
+    gap: 100px;
     /* background-color: black; */
 }
 .head-container{
@@ -26,4 +34,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
 }

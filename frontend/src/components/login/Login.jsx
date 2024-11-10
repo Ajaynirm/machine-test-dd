@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './login.css'
+import axios from 'axios';
+
 const Login = () => {
     const [userName,setUserName] = useState('');
     const [validName,setValidName] =useState(false);
     const [validPass,setValidPass] =useState(false);
     const [password,setPassword] = useState('');
+    const navigate = useNavigate();
     const setName = (name) => {
         setValidName(false);
       setUserName(name);
@@ -18,13 +22,33 @@ const Login = () => {
        const check = pass.length > 5 ? true : false;
        if(pass.length >4) setValidPass(true);
     }
-    const handleSubmit = (e) => {
-        console.log('Form submitted:');
-    alert(`Welcome, ${userName}!`);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+        if(!validName || !validPass){
+          return alert('please fill all fields correctly');
+        }
+        localStorage.setItem('username',userName);
+        // navigate('/main-page');
+        try {
+          const response = await axios.post('http://localhost:3000/api/login', {
+            t_userName:userName,
+            t_Pwd:password,
+          });
+    
+          if (response.data.success) {
+            
+            navigate('/main-page');
+            alert('Login successfull');
+          } else {
+            console.log('Invalid login credentials');
+          }
+         } catch (err) {
+             console.log(err);
+        }
     }
 
 useEffect( () => {
-  localStorage.setItem('username','ajay');
+  // localStorage.setItem('username','ajay');
 }
   ,[]);
 
