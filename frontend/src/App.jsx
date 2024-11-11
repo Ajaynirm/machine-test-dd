@@ -32,6 +32,9 @@ function App() {
         </Route>
         <Route path="/login-page" element={<Login />} >
         </Route>
+        <Route path="/home-page" element={<AdminPanel />} >
+        </Route>
+        
       </Routes>
     </BrowserRouter>
     </>

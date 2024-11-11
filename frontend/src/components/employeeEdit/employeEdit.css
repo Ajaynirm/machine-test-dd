@@ -1,0 +1,63 @@
+.container{
+    display: flex;
+    /* height: 600px; */
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    /* gap: 10px; */
+    /* margin: 10px; */
+   
+
+    /* for debugging purpose i used background color property */
+    background-color: aqua;
+
+}
+.sub-container{
+    width: 600px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+    justify-content: space-around;
+    align-items: center;
+    /* margin: 10px; */
+    /* gap: 10px; */
+    background-color: green;
+}
+.head-container{
+    display: flex;
+    height: 50px;
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+}
+/* .form-container{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+} */
+.input-box{
+    height: 40px;
+    width: 250px;
+    font-size: large;
+}
+
+.login-btn{
+    height: 50px;
+    width: 140px;
+    cursor: pointer;
+}
+
+.designation{
+    height: 30px;
+    width: 200px;
+    cursor: pointer;
+    font-size: large;
+}

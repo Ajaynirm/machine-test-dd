@@ -3,8 +3,8 @@
     flex-direction: column;
     flex-wrap: wrap;
     gap: 30px;
-    /* background-color: blue;
-} */
+    /* background-color: blue; */
+} 
 .head-container{
     display: flex;
     flex-direction: row;
@@ -14,4 +14,7 @@
 .welcome-container{
     display: flex;
     justify-content: center;
+}
+.mouse-ptn{
+    cursor: pointer;
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { useState,useEffect } from 'react';
 import './emplist.css'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const EmployeeList = () => {
 
@@ -15,19 +16,24 @@ const EmployeeList = () => {
     const handleLogout = () => {
       navigate('/login-page');
     }
+    const openHome = () => {
+      navigate('/home-page');
+    }
 
     useEffect(() => {
         const getEmployeesFromDatabase = async () => {
             try{
-              const res = await fetch('url');
-              const data = await res.json();
-              setEmployees(data);
+              console.log('fetching')
+              const response = await axios.get('http://localhost:3000/api/data'); 
+              setEmployees(response.data.data || response.data);
+              console.log('got')
+              console.log(response.data);
             }catch(e){
-                console.log(e);
+                console.log('error while fetching the data',e);
             }
         }
     getEmployeesFromDatabase();
-
+    
     },[]);
   return (
         <>
@@ -36,10 +42,10 @@ const EmployeeList = () => {
 <div>Logo</div>
         <div className="container">
             <div className='head-container'>
-                <div>Home</div>
-                <div onClick={openEmployList}>Employee List</div>
+                <div onClick={openHome} className='mouse-btn'>Home</div>
+                <div onClick={openEmployList} className='mouse-btn'>Employee List</div>
                 <div>{localStorage.getItem('username')}</div>
-                <div onClick={handleLogout}> logout</div>
+                <div onClick={handleLogout} className='mouse-btn'> logout</div>
             </div>
             <div>Employee List</div>
            
@@ -49,7 +55,7 @@ const EmployeeList = () => {
       {/* Grid Header */}
       <div className='grid-row'>
         <span> Unique ID</span>
-        <span>Image</span>
+        {/* <span>Image</span> */}
         <span>Name</span>
         <span>Email</span>
         <span>Mobile No</span>
@@ -62,12 +68,18 @@ const EmployeeList = () => {
       </div>
 
       {/* Grid Rows */}
-      {employees && employees.length > 0 ? employees.map((employee) => (
-        <div key={employee.id} className='grid-row'>
-          <span>{employee.id}</span>
-          <span>{employee.name}</span>
-          <span>{employee.designation}</span>
-          <span>{employee.email}</span>
+      {employees && employees.length > 0 ? employees.map((employee,ind) => (
+        <div key={ind} className='grid-row'>
+          <span>{employee.id || "N/A"}</span>
+          {/* <span>{employee.f_Image || "N/A"}</span> */}
+          <span>{employee.f_Name || "N/A"}</span>
+          <span>{employee.f_Email || "N/A"}</span>
+          <span>{employee.f_Mobile || "N/A"}</span>
+          <span>{employee.f_Designation || "N/A"}</span>
+          <span>{employee.f_Gender || "N/A"}</span>
+          <span>{employee.f_Course || "N/A"}</span>
+          <span>{employee.f_Createdate || "N/A"}</span>
+          <span>Edit/Delete</span>
         </div>
       )) : <p>No employees found in the database </p>}
     </div>
@@ -76,4 +88,4 @@ const EmployeeList = () => {
   )
 }
 
-export default EmployeeList
+export default EmployeeList; 

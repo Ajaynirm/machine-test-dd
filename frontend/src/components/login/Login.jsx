@@ -22,7 +22,7 @@ const Login = () => {
        const check = pass.length > 5 ? true : false;
        if(pass.length >4) setValidPass(true);
     }
-    const handleSubmit = async (e) => {
+    const submit = async (e) => {
       e.preventDefault();
         if(!validName || !validPass){
           return alert('please fill all fields correctly');
@@ -55,12 +55,15 @@ useEffect( () => {
   return (
     <>
     <div>Logo</div>
-    <div>Login</div>
+   
     <div className='login-container'>
-    <form onSubmit={handleSubmit}>
+    <form >
+    <div className='sub-container'>
+    <div>Login</div>
+      </div>
         <div className='sub-container'>
 
-        <label>Username</label>
+        <label htmlFor='username'>Username</label>
         <input
         className='input-box'
           id='username'
@@ -72,7 +75,7 @@ useEffect( () => {
         </div>
       
       <div className='sub-container'>
-      <label>Password</label>
+      <label htmlFor='password'>Password</label>
         <input
         className='input-box'
           id="password"
@@ -83,10 +86,10 @@ useEffect( () => {
         
       </div>
       <div className='sub-container-alert'>
-         <div>{!validName ? "Enter valid username" : (!validPass) ? "Enter valid Password" : "username and password are valid"}</div>
+         <div>{!validName ? "Enter valid username" : (!validPass) ? "Enter valid Password" : "done"}</div>
       </div>
        <div className='sub-container-alert'>
-         <button type='submit'>Login</button>
+         <button onClick={submit} className='login-btn'>Login</button>
        </div>
     </form>
     </div>

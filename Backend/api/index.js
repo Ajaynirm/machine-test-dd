@@ -15,7 +15,8 @@ app.get('/', (req,res) => {
 
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
-   console.log(username);
+   console.log(username,password);
+
     try {
       // Find the user by username
       console.log('up')
@@ -35,6 +36,19 @@ app.post('/api/login', async (req, res) => {
       // If the username and password are correct, login is successful
       res.json({ success: true, message: 'Login successful' });
   
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Server error' });
+    }
+  });
+
+  app.get('/api/data', async (req, res) => {
+    try {
+      // Fetch all documents in the collection
+      console.log('up')
+      const data = await t_Employee.find({});
+      console.log('down')
+      res.json(data);
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: 'Server error' });
