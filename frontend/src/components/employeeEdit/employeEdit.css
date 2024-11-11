@@ -10,7 +10,7 @@
    
 
     /* for debugging purpose i used background color property */
-    background-color: aqua;
+    /* background-color: aqua; */
 
 }
 .sub-container{
@@ -23,7 +23,7 @@
     align-items: center;
     /* margin: 10px; */
     /* gap: 10px; */
-    background-color: green;
+    /* background-color: green; */
 }
 .head-container{
     display: flex;

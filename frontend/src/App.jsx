@@ -1,44 +1,45 @@
-import { useState } from 'react'
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import './App.css'
-import Login from './components/login/Login'
-import AdminPanel from './components/adminPanel/AdminPanel';
-import CreateEmp from './components/createEmployee/CreateEmp';
-import EmployeeList from './components/employList/EmployeeList';
-import EmployeEdit from './components/employeeEdit/EmployeEdit';
+import "./App.css";
+import Login from "./components/login/Login";
+import AdminPanel from "./components/adminPanel/AdminPanel";
+import CreateEmp from "./components/createEmployee/CreateEmp";
+import EmployeeList from "./components/employList/EmployeeList";
+import EmployeEdit from "./components/employeeEdit/EmployeEdit";
 
 function App() {
- 
+  const [logout, setLogout] = useState(false);
 
+  const handleLogout = () =>{
+    alert("log out successfully")
+     setLogout(true);
+
+  }
+  const handleLogin = () => setLogout(false);
   return (
     <>
-       <BrowserRouter>
-      <Routes>
-          <Route path="/login" element={<Login />}>
-        </Route>
-        <Route path='/admin' element={<AdminPanel />} >
-        </Route>
-        <Route path='/createEmp' element={<CreateEmp />} >
-        </Route>
-        <Route path='/emplist' element={<EmployeeList />} >
-        </Route>
-        <Route path='/empedit' element={<EmployeEdit />} >
-        </Route>
-
-        <Route path="/main-page" element={<AdminPanel />} >
-        </Route>
-        <Route path="/emplist" element={<EmployeeList />} >
-        </Route>
-        <Route path="/login-page" element={<Login />} >
-        </Route>
-        <Route path="/home-page" element={<AdminPanel />} >
-        </Route>
-        
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        {!logout && (
+          <Routes>
+            <Route path="/login" element={<Login onLogin={handleLogin}/>}></Route>
+            <Route path="/admin" element={<AdminPanel onLogout={handleLogout} />}></Route>
+            <Route path="/createEmp" element={<CreateEmp onLogout={handleLogout} />}></Route>
+            <Route path="/emplist" element={<EmployeeList onLogout={handleLogout}/>}></Route>
+            <Route path="/empedit" element={<EmployeEdit />}></Route>
+            <Route path="/main-page" element={<AdminPanel onLogout={handleLogout}/>}></Route>
+            <Route path="/login-page" element={<Login onLogin={handleLogin}/>}></Route>
+            <Route path="/home-page" element={<AdminPanel onLogout={handleLogout}/>}></Route>
+          </Routes>
+           )} 
+        <Routes>
+          <Route>
+          <Route path="/login-page" element={<Login />}></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

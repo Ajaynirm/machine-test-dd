@@ -1,96 +1,264 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import "./employeEdit.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const EmployeEdit = () => {
+
+  // const [name, setName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [mobile, setMobile] = useState('');
+  // const [desig, setDesig] = useState('');
+  // const [gender, setGender] = useState('');
+  // const [course, setCourse] = useState('');
+  // const [selectedImg, setSelectedImg] = useState('');
+  
+  const location = useLocation();
+  const { data } = location.state || {};
+  const [name, setName] = useState(data?.f_Name || '');
+  const [email, setEmail] = useState(data?.f_Email || '');
+  const [mobile, setMobile] = useState(data?.f_Mobile || '');
+  const [desig, setDesig] = useState(data?.f_Designation || '');
+  const [gender, setGender] = useState(data?.f_Gender || '');
+  const [course, setCourse] = useState(data?.f_Course || '');
+  const [selectedImg, setSelectedImg] = useState(data?.f_Image || null);
+ 
+  const navigate =useNavigate();
+  // const location = useLocation();
+  // const {newData}= location.state?.data || {};
+  useEffect(() => {
+    if(data){
+    setName(data?.f_Name || "");
+    console.log(name);
+    setEmail(data?.f_Email || "");
+    setMobile(data?.f_Mobile || "");
+    setDesig(data?.f_Designation || "");
+    setGender(data?.f_Gender || "");
+    setCourse(data?.f_Course || "");
+    setCourse(data?.f_Image || "");
+    }
+    
+  },[data]);
+
+  const setImageFunc = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImg(file);
+    }
+  };
+  const handleDesig = (e) => {
+    // console.log(e.target.value)
+    setDesig(e.target.value);
+  };
+  const handleCheck = (e) => {
+    setGender(e.target.value);
+  };
+  const updateCourse = (e) => {
+    const newCourse = e.target.value;
+    if (newCourse == course) {
+      setCourse("");
+    } else {
+      setCourse(newCourse);
+    }
+  };
+  const data1 = {
+    f_Name: name,
+    f_Email: email,
+    f_Mobile: mobile,
+    f_Designation: desig,
+    f_Gender: gender,
+    f_Course: course,
+    f_Image: selectedImg,
+  };
+ 
+  const sendDataToBackend = async () => {
+    if (
+      !name ||
+      !email ||
+      !mobile ||
+      !desig ||
+      !gender ||
+      !course ||
+      !selectedImg
+    ) {
+      return alert("PLEASE FILL ALL THE FIELDS CORRECTLY");
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/updateEmployee",
+        data
+      );
+      console.log("Data sent successfully:", response.data);
+      alert("Data updated successfully");
+      navigate('/emp-list');
+
+    } catch (error) {
+      alert("data updated successfully")
+      console.error("Error while update the data ..: ", error);
+      navigate('/emp-list');
+    }
+  };
+
+  const openHome = () => {
+    navigate('/home-page');
+  }
+  const openEmployList = () => {
+    navigate('/emplist');
+  }
+  const handleLogout = () => {
+    navigate('/login-page');
+  }
+
   return (
     <>
       <div>Logo</div>
       <div className="container">
         <div className="head-container">
-          <div>Home</div>
-          <div>Employee List</div>
-          <div>Hukum Gupta Username</div>
-          <div> logout</div>
+          <div  onClick={openHome} className='mouse-btn'>Home</div>
+          <div onClick={openEmployList} className='mouse-btn'>Employee List</div>
+          <div>{localStorage.getItem("username")}</div>
+          <div onClick={handleLogout} className='mouse-btn'> logout</div>
         </div>
         <div>Edit Employee</div>
       </div>
-      <div className="container">
-        <div className="sub-container">
-          <label>Name</label>
+      
+        <div className="container">
+        <form>
+        <div className="sub-container-c">
+          <label htmlFor="name">Name</label>
           <input
             className="input-box"
             id="name"
             type="text"
-            value={"a"}
-            //   onChange={(e) => setName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
 
-        <div className="sub-container">
-          <label>Email</label>
+        <div className="sub-container-c">
+          <label htmlFor="email">Email</label>
           <input
             className="input-box"
-            id="text"
-            type="email"
-            value={"a@gmail.com"}
-            //   onChange={(e) => setPass(e.target.value)}
+            id="email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
-        <div className="sub-container">
-          <label>Mobile no</label>
+        <div className="sub-container-c">
+          <label htmlFor="mobile">Mobile no</label>
           <input
             className="input-box"
             id="mobile"
-            type="number"
-            value={2}
-            //   onChange={(e) => setPass(e.target.value)}
-          />
-        </div>
-
-        <div className="sub-container">
-          <label>Designation</label>
-          <input
-            className="input-box"
-            id="designation"
-            type="number"
-            value={2}
-            //   onChange={(e) => setPass(e.target.value)}
-          />
-        </div>
-
-        <div className="sub-container">
-          <label>Gender</label>
-          <input
-            className="input-box"
-            id="gender"
             type="text"
-            value={"a"}
-            //   onChange={(e) => setPass(e.target.value)}
+            value={mobile}
+            onChange={(e) => setMobile(e.target.value)}
           />
         </div>
 
-        <div className="sub-container">
+        <div className="sub-container-c">
+          <div>
+          <label htmlFor="options">Designation</label>
+          </div>
+          
+          <div>
+          <select id="options" value={desig} onChange={handleDesig} className="designation">
+            <option value={desig}>select</option>
+            <option value="Sales">Sales</option>
+            <option value="Hr">HR</option>
+            <option value="developer">Developer</option>
+            <option value="tester">Tester</option>
+          </select>
+          </div>
+         
+        </div>
+
+        <div className="sub-container-c">
+          <label htmlFor="gender">Gender</label>
+          <label>
+            <input
+              id="gender"
+              type="radio"
+              value="male"
+              checked={gender === "male"}
+              onChange={handleCheck}
+            />
+            male
+          </label>
+          <label htmlFor="female">
+            <input
+            id="female"
+              type="radio"
+              value="female"
+              checked={gender === "female"}
+              onChange={handleCheck}
+            />
+            female
+          </label>
+        </div>
+
+        <div className="sub-container-c">
           <label>Course</label>
-          <input
-            className="input-box"
-            id="course"
-            type="text"
-            value={"a"}
-            //   onChange={(e) => setPass(e.target.value)}
-          />
+          <div>
+            <label htmlFor="me">M.E</label>
+            <input
+              type="checkbox"
+              name=""
+              id="me"
+              value={"M.E"}
+              onChange={updateCourse}
+              checked={course === "M.E"}
+            />
+          </div>
+          <div>
+            <label htmlFor="be">B.E</label>
+            <input
+              type="checkbox"
+              name=""
+              id="be"
+              value={"B.E"}
+              onChange={updateCourse}
+              checked={course === "B.E"}
+            />
+          </div>
+          <div>
+            <label htmlFor="bt">B.Tech</label>
+            <input
+              type="checkbox"
+              name=""
+              id="bt"
+              value={"B.TECH"}
+              onChange={updateCourse}
+              checked={course == "B.TECH"}
+            />
+          </div>
         </div>
 
-        <div className="sub-container">
+        <div className="sub-container-c">
           <label>Image Upload</label>
           <input
             className="input-box"
             id="imagee"
-            type="text"
-            value={".png"}
-            //   onChange={(e) => setPass(e.target.value)}
+            type="file"
+            accept="image/*"
+            onChange={setImageFunc}
           />
+          {selectedImg && (
+            <img
+              src={selectedImg}
+              alt="Preview"
+              style={{ width: "200px", height: "30px", marginTop: "10px" }}
+            />
+          )}
         </div>
+        
+        <div className='sub-container-c'>
+          <button onClick={sendDataToBackend} className="login-btn">Update</button>
+        </div>
+        </form>                                   
       </div>
     </>
   );

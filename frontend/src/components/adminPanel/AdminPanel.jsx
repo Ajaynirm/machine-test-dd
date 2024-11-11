@@ -3,16 +3,14 @@ import './adminpanal.css'
 import { useNavigate } from 'react-router-dom'
 
 
-const AdminPanel = () => {
+const AdminPanel = ({onLogout}) => {
 
   const navigate = useNavigate();
 
   const openEmployList = () => {
    navigate('/emplist');
   }
-  const handleLogout = () => {
-    navigate('/login-page');
-  }
+ 
 
   return (
     <>
@@ -22,7 +20,7 @@ const AdminPanel = () => {
                 <div className='mouse-ptn'>Home</div>
                 <div onClick={openEmployList} className='mouse-ptn'>Employee List</div>
                 <div>{localStorage.getItem('username')}</div>
-                <div onClick={handleLogout} className='mouse-ptn'> logout</div>
+                <div onClick={onLogout} className='mouse-ptn'> logout</div>
             </div>
             <div>dashboard</div>
             <div className='welcome-container'>Welcome to Admin Panel </div>

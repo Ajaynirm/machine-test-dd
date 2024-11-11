@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './login.css'
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({onLogin}) => {
     const [userName,setUserName] = useState('');
     const [validName,setValidName] =useState(false);
     const [validPass,setValidPass] =useState(false);
@@ -36,7 +36,7 @@ const Login = () => {
           });
     
           if (response.data.success) {
-            
+            onLogin();
             navigate('/main-page');
             alert('Login successfull');
           } else {

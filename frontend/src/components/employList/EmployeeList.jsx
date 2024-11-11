@@ -4,8 +4,8 @@ import './emplist.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const EmployeeList = () => {
 
+const EmployeeList = () => {
     const [employees, setEmployees] = useState([]);
 
     const navigate = useNavigate();
@@ -18,6 +18,15 @@ const EmployeeList = () => {
     }
     const openHome = () => {
       navigate('/home-page');
+    }
+    const handleEdit = (ind) => {
+      const emp = employees[ind];
+      console.log(emp.f_Name)
+      if(emp){
+        navigate('/empedit', { state: { data: emp } });
+      } else {
+        console.error("No employee data found at index:", ind);
+      }
     }
 
     useEffect(() => {
@@ -70,7 +79,7 @@ const EmployeeList = () => {
       {/* Grid Rows */}
       {employees && employees.length > 0 ? employees.map((employee,ind) => (
         <div key={ind} className='grid-row'>
-          <span>{employee.id || "N/A"}</span>
+          <span>{ind+1}</span>
           {/* <span>{employee.f_Image || "N/A"}</span> */}
           <span>{employee.f_Name || "N/A"}</span>
           <span>{employee.f_Email || "N/A"}</span>
@@ -79,7 +88,7 @@ const EmployeeList = () => {
           <span>{employee.f_Gender || "N/A"}</span>
           <span>{employee.f_Course || "N/A"}</span>
           <span>{employee.f_Createdate || "N/A"}</span>
-          <span>Edit/Delete</span>
+          <span><button id={ind} onClick={() => handleEdit(ind)}>Edit/Delete</button></span>
         </div>
       )) : <p>No employees found in the database </p>}
     </div>

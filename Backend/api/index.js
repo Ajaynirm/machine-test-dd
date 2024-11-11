@@ -72,7 +72,35 @@ app.post('/api/createEmployee', async (req,res) => {
     }
     
 });
+
+app.put('/api/updateEmployee', async (req, res) => {
+  const { f_Name, f_Email, f_Mobile, f_Designation, f_Gender, f_Course, f_Image } = req.body;
+  
+  try {
+    // Find the employee by email and update their data
+    const updatedEmployee = await t_Employee.findOneAndUpdate(
+      { f_Email: f_Email },  // Use email as the identifier
+      {
+        f_Name,
+        f_Mobile,
+        f_Designation,
+        f_Gender,
+        f_Course,
+        f_Image,
+      },
+      { new: true }  // Return the updated document
+    );
     
+    if (!updatedEmployee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+    
+    res.status(200).json(updatedEmployee);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update employee data' });
+  }
+});
+
 startDBServer();
 app.listen(3000, () => {
     console.log('server is listening on port 3000');
