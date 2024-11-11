@@ -18,22 +18,19 @@ app.post('/api/login', async (req, res) => {
    console.log(username,password);
 
     try {
-      // Find the user by username
       console.log('up')
       const user = await t_login.findOne({ username });
       console.log('down')
       if (!user) {
         return res.status(400).json({ success: false, message: 'Invalid username or password' });
       }
-  
-      // Check if the password matches
+
       const isMatch = (password === user.f_Pwd);
       
       if (!isMatch) {
         return res.status(400).json({ success: false, message: 'Invalid username or password' });
       }
   
-      // If the username and password are correct, login is successful
       res.json({ success: true, message: 'Login successful' });
   
     } catch (error) {
@@ -44,7 +41,7 @@ app.post('/api/login', async (req, res) => {
 
   app.get('/api/data', async (req, res) => {
     try {
-      // Fetch all documents in the collection
+      
       console.log('up')
       const data = await t_Employee.find({});
       console.log('down')
@@ -77,9 +74,8 @@ app.put('/api/updateEmployee', async (req, res) => {
   const { f_Name, f_Email, f_Mobile, f_Designation, f_Gender, f_Course, f_Image } = req.body;
   
   try {
-    // Find the employee by email and update their data
     const updatedEmployee = await t_Employee.findOneAndUpdate(
-      { f_Email: f_Email },  // Use email as the identifier
+      { f_Email: f_Email },  
       {
         f_Name,
         f_Mobile,
@@ -88,7 +84,7 @@ app.put('/api/updateEmployee', async (req, res) => {
         f_Course,
         f_Image,
       },
-      { new: true }  // Return the updated document
+      { new: true }  
     );
     
     if (!updatedEmployee) {
@@ -105,3 +101,6 @@ startDBServer();
 app.listen(3000, () => {
     console.log('server is listening on port 3000');
 })
+
+
+

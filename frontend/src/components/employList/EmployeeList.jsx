@@ -61,10 +61,10 @@ const EmployeeList = () => {
         </div>
          <div   className='employ-grid'>
                 
-      {/* Grid Header */}
+      
       <div className='grid-row'>
         <span> Unique ID</span>
-        {/* <span>Image</span> */}
+        
         <span>Name</span>
         <span>Email</span>
         <span>Mobile No</span>
@@ -76,7 +76,7 @@ const EmployeeList = () => {
         
       </div>
 
-      {/* Grid Rows */}
+     
       {employees && employees.length > 0 ? employees.map((employee,ind) => (
         <div key={ind} className='grid-row'>
           <span>{ind+1}</span>

@@ -5,16 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-const EmployeEdit = () => {
-
-  // const [name, setName] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [mobile, setMobile] = useState('');
-  // const [desig, setDesig] = useState('');
-  // const [gender, setGender] = useState('');
-  // const [course, setCourse] = useState('');
-  // const [selectedImg, setSelectedImg] = useState('');
-  
+const EmployeEdit = () => {  
   const location = useLocation();
   const { data } = location.state || {};
   const [name, setName] = useState(data?.f_Name || '');
