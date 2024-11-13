@@ -19,6 +19,9 @@ const EmployeeList = () => {
     const openHome = () => {
       navigate('/home-page');
     }
+    const openCreateEmployee = () => {
+      navigate('/createEmp');
+    }
     const handleEdit = (ind) => {
       const emp = employees[ind];
       console.log(emp.f_Name)
@@ -51,8 +54,9 @@ const EmployeeList = () => {
 <div>Logo</div>
         <div className="container">
             <div className='head-container'>
-                <div onClick={openHome} className='mouse-btn'>Home</div>
+            <div onClick={openHome} className='mouse-btn'>Home</div>
                 <div onClick={openEmployList} className='mouse-btn'>Employee List</div>
+                <div onClick={openCreateEmployee} className='mouse-ptn'>Create Employee</div>
                 <div>{localStorage.getItem('username')}</div>
                 <div onClick={handleLogout} className='mouse-btn'> logout</div>
             </div>

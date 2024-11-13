@@ -10,6 +10,9 @@ const AdminPanel = ({onLogout}) => {
   const openEmployList = () => {
    navigate('/emplist');
   }
+  const openCreateEmployee = () => {
+    navigate('/createEmp');
+  }
  
 
   return (
@@ -18,7 +21,9 @@ const AdminPanel = ({onLogout}) => {
         <div className="container">
             <div className='head-container'>
                 <div className='mouse-ptn'>Home</div>
+
                 <div onClick={openEmployList} className='mouse-ptn'>Employee List</div>
+                <div onClick={openCreateEmployee} className='mouse-ptn'>Create Employee</div>
                 <div>{localStorage.getItem('username')}</div>
                 <div onClick={onLogout} className='mouse-ptn'> logout</div>
             </div>

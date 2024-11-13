@@ -35,8 +35,7 @@ const EmployeeSchema = new mongoose.Schema({
         required: true
     },
     f_Image: {
-        type: Buffer,
-        required: true
+        type: String,
     },
    
     f_Createdate:{

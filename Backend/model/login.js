@@ -1,15 +1,14 @@
 import mongoose from "mongoose";
 
 const loginSchema = new mongoose.Schema({
-    f_sno:{
-        type: Number,
-        required: true
+    t_sno:{
+        type: Number
     },
-    f_userName: {
+    t_userName: {
         type: 'String',
         required: true
     },
-    f_Pwd:{
+    t_Pwd:{
         type: 'String',
         required: true
     }

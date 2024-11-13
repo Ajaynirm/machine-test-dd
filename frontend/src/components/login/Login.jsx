@@ -12,15 +12,14 @@ const Login = ({onLogin}) => {
     const setName = (name) => {
         setValidName(false);
       setUserName(name);
-      if(name.length >2){
+      if(name.length >0){
         setValidName(true);
       }
     }
     const setPass = (pass) => {
         setValidPass(false);
        setPassword(pass);
-       const check = pass.length > 5 ? true : false;
-       if(pass.length >4) setValidPass(true);
+       if(pass.length > 2) setValidPass(true);
     }
     const submit = async (e) => {
       e.preventDefault();
@@ -34,16 +33,17 @@ const Login = ({onLogin}) => {
             t_userName:userName,
             t_Pwd:password,
           });
-    
+          console.log(response);
           if (response.data.success) {
             onLogin();
             navigate('/main-page');
             alert('Login successfull');
           } else {
-            console.log('Invalid login credentials');
+            console.log('Invalid login credential');
           }
          } catch (err) {
              console.log(err);
+             alert('server error');
         }
     }
 
@@ -86,7 +86,7 @@ useEffect( () => {
         
       </div>
       <div className='sub-container-alert'>
-         <div>{!validName ? "Enter valid username" : (!validPass) ? "Enter valid Password" : "done"}</div>
+         <div>{!validName ? "Enter valid Username" : (!validPass) ? "Enter valid Password" : "done"}</div>
       </div>
        <div className='sub-container-alert'>
          <button onClick={submit} className='login-btn'>Login</button>

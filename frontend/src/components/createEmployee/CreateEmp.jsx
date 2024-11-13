@@ -1,21 +1,36 @@
 import React, { useState } from "react";
 import "./createEmp.css";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const CreateEmp = () => {
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [mobile, setMobile] = useState(null);
-  const [desig, setDesig] = useState(null);
-  const [gender, setGender] = useState(null);
-  const [course, setCourse] = useState(null);
-  const [selectedImg, setSelectedImg] = useState(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [desig, setDesig] = useState("");
+  const [gender, setGender] = useState("");
+  const [course, setCourse] = useState("");
+  const [selectedImg, setSelectedImg] = useState("...");
+  const [preview,setPreview] = useState(".../img/src");
 
-  const setImageFunc = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedImg(file);
-    }
+  const navigate = useNavigate();
+  const openEmployList = () => {
+    navigate('/emplist');
+   }
+   const handleLogout = () => {
+     navigate('/login-page');
+   }
+   const openHome = () => {
+     navigate('/home-page');
+   }
+   const openCreateEmployee = () => {
+     navigate('/createEmp');
+   }
+   
+   const setImageFunc = () => {
+    console.log("called")
+
+        setSelectedImg("...");
   };
   const handleDesig = (e) => {
     // console.log(e.target.value)
@@ -32,36 +47,41 @@ const CreateEmp = () => {
       setCourse(newCourse);
     }
   };
-  const data = {
-    f_Name: name,
-    f_Email: email,
-    f_Mobile: mobile,
-    f_Designation: desig,
-    f_Gender: gender,
-    f_Course: course,
-    f_Image: selectedImg,
-  };
+ 
 
-  const sendDataToBackend = async () => {
+  const sendDataToBackend = async (e) => {
+    e.preventDefault();
+   
     if (
       !name ||
       !email ||
       !mobile ||
       !desig ||
       !gender ||
-      !course ||
-      !selectedImg
+      !course 
     ) {
       return alert("PLEASE FILL ALL THE FIELDS CORRECTLY");
     }
     try {
+      const data = {
+        f_Name: name,
+        f_Email: email,
+        f_Mobile: mobile,
+        f_Designation: desig,
+        f_Gender: gender,
+        f_Course: course,
+        // f_Image: selectedImg,
+      };
+      console.log('up')
       const response = await axios.post(
         "http://localhost:3000/api/createEmployee",
         data
       );
       console.log("Data sent successfully:", response.data);
+      alert('employee created successfully');
+      navigate("/emplist");
     } catch (error) {
-      console.error("Error: ", error);
+      console.error("Error made by server: ");
     }
   };
 
@@ -70,10 +90,11 @@ const CreateEmp = () => {
        <div>Logo</div>
       <div className="container">
         <div className="head-container">
-          <div>Home</div>
-          <div>Employee List</div>
-          <div>{localStorage.getItem("username")}</div>
-          <div> logout</div>
+        <div onClick={openHome} className='mouse-btn'>Home</div>
+        <div onClick={openEmployList} className='mouse-btn'>Employee List</div>
+        <div onClick={openCreateEmployee} className='mouse-ptn'>Create Employee</div>
+        <div>{localStorage.getItem('username')}</div>
+        <div onClick={handleLogout} className='mouse-btn'> logout</div>
         </div>
         <div>Create Employee</div>
       </div> 
@@ -200,9 +221,9 @@ const CreateEmp = () => {
             accept="image/*"
             onChange={setImageFunc}
           />
-          {selectedImg && (
+          {setSelectedImg && (
             <img
-              src={selectedImg}
+              src={preview}
               alt="Preview"
               style={{ width: "200px", height: "30px", marginTop: "10px" }}
             />

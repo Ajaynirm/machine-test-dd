@@ -12,25 +12,38 @@ app.use(express.json());
 app.get('/', (req,res) => {
     res.send('Hello World');
 })
+app.post('/addAdmin', async (req,res) => {
+  const { t_userName , t_Pwd} = req.body;
+  console.log(t_userName,t_Pwd);
+ 
 
+  try{
+   const newAdmin = new t_login({t_userName,t_Pwd});
+   await newAdmin.save();
+   res.json({ success: true, message: 'Admin added successfully' });
+  }catch(e){
+   console.log(e.message);
+  }
+
+})
 app.post('/api/login', async (req, res) => {
-    const { username, password } = req.body;
-   console.log(username,password);
+    const { t_userName, t_Pwd } = req.body;
+   console.log(t_userName,t_Pwd);
 
     try {
       console.log('up')
-      const user = await t_login.findOne({ username });
+      const user = await t_login.findOne({ t_userName });
       console.log('down')
       if (!user) {
-        return res.status(400).json({ success: false, message: 'Invalid username or password' });
+        return res.status(400).json({ success: false, message: 'User  not found' });
       }
-
-      const isMatch = (password === user.f_Pwd);
-      
+      console.log("up2")
+      const isMatch = (t_Pwd === user.t_Pwd);
+      console.log("mid2")
       if (!isMatch) {
         return res.status(400).json({ success: false, message: 'Invalid username or password' });
       }
-  
+      console.log("down2")
       res.json({ success: true, message: 'Login successful' });
   
     } catch (error) {
@@ -55,6 +68,7 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/createEmployee', async (req,res) => {
     const {f_Name,f_Email,f_Mobile,f_Designation,f_Gender,f_Course,f_Image} =req.body;
     console.log(f_Name,f_Email,f_Mobile,f_Designation,f_Gender,f_Course,f_Image);
+  
     try{
         console.log(req.body);
         console.log('above');
