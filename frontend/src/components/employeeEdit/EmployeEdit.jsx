@@ -11,9 +11,9 @@ const EmployeEdit = () => {
   const [name, setName] = useState(data?.f_Name || '');
   const [email, setEmail] = useState(data?.f_Email || '');
   const [mobile, setMobile] = useState(data?.f_Mobile || '');
-  const [desig, setDesig] = useState(data?.f_Designation || '');
-  const [gender, setGender] = useState(data?.f_Gender || '');
-  const [course, setCourse] = useState(data?.f_Course || '');
+  const [desig, setDesig] = useState(data?.f_Designation || 'HR');
+  const [gender, setGender] = useState(data?.f_Gender || 'Male');
+  const [course, setCourse] = useState(data?.f_Course || 'B.E');
   const [selectedImg, setSelectedImg] = useState(data?.f_Image || null);
  
   const navigate =useNavigate();
@@ -54,43 +54,61 @@ const EmployeEdit = () => {
       setCourse(newCourse);
     }
   };
-  const data1 = {
-    f_Name: name,
-    f_Email: email,
-    f_Mobile: mobile,
-    f_Designation: desig,
-    f_Gender: gender,
-    f_Course: course,
-    f_Image: selectedImg,
-  };
  
-  const sendDataToBackend = async () => {
+ 
+  const sendDataToBackend = async (e) => {
+    e.preventDefault();
     if (
       !name ||
       !email ||
       !mobile ||
       !desig ||
       !gender ||
-      !course ||
-      !selectedImg
+      !course 
     ) {
       return alert("PLEASE FILL ALL THE FIELDS CORRECTLY");
     }
     try {
-      const response = await axios.post(
+      const data1 = {
+        f_Name: name,
+        f_Email: email,
+        f_Mobile: mobile,
+        f_Designation: desig,
+        f_Gender: gender,
+        f_Course: course,
+        f_Image: selectedImg,
+      };
+      const response = await axios.put(
         "http://localhost:3000/api/updateEmployee",
-        data
+        data1
       );
-      console.log("Data sent successfully:", response.data);
+      if(response.status===200){
+      console.log("Data updated successfully:", response.data);
       alert("Data updated successfully");
-      navigate('/emp-list');
-
+      navigate('/emplist');
+      }
     } catch (error) {
-      alert("data updated successfully")
+      alert("data not updated retry");
       console.error("Error while update the data ..: ", error);
-      navigate('/emp-list');
     }
   };
+  const deleteDatafromBackend = async (e) => {
+    e.preventDefault();
+    try{
+      const response = await axios.delete('http://localhost:3000/api/deleteEmployee',{
+        data : {f_Email: email}
+      }
+      );
+      if(response){
+        alert("Data deleted successfully");
+      navigate('/emplist');
+      }
+     
+     
+    }catch(e){
+     console.log(e.message);
+    }
+  }
 
   const openHome = () => {
     navigate('/home-page');
@@ -157,7 +175,7 @@ const EmployeEdit = () => {
           
           <div>
           <select id="options" value={desig} onChange={handleDesig} className="designation">
-            <option value={desig}>select</option>
+            <option value={""} >select</option>
             <option value="Sales">Sales</option>
             <option value="Hr">HR</option>
             <option value="developer">Developer</option>
@@ -248,6 +266,7 @@ const EmployeEdit = () => {
         
         <div className='sub-container-c'>
           <button onClick={sendDataToBackend} className="login-btn">Update</button>
+          <button onClick={deleteDatafromBackend} className="login-btn">Delete</button>
         </div>
         </form>                                   
       </div>

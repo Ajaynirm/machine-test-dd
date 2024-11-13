@@ -61,7 +61,7 @@ const EmployeeList = () => {
                 <div onClick={handleLogout} className='mouse-btn'> logout</div>
             </div>
             <div>Employee List</div>
-           
+            <div>count: {employees.length}</div>
         </div>
          <div   className='employ-grid'>
                 

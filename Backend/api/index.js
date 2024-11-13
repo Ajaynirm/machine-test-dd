@@ -89,7 +89,7 @@ app.put('/api/updateEmployee', async (req, res) => {
   
   try {
     const updatedEmployee = await t_Employee.findOneAndUpdate(
-      { f_Email: f_Email },  
+      { f_Email },  
       {
         f_Name,
         f_Mobile,
@@ -105,9 +105,31 @@ app.put('/api/updateEmployee', async (req, res) => {
       return res.status(404).json({ message: "Employee not found" });
     }
     
-    res.status(200).json(updatedEmployee);
+    return res.status(200).json(updatedEmployee);
   } catch (error) {
     res.status(500).json({ error: 'Failed to update employee data' });
+  }
+});
+
+app.delete('/api/deleteEmployee', async (req, res) => {
+  const { f_Email } = req.body;
+
+  if (!f_Email) {
+    return res.status(400).json({ message: 'Email is required' });
+  }
+
+  try {
+  
+    const deletedEmployee = await t_Employee.findOneAndDelete({ f_Email });
+
+    if (!deletedEmployee) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+
+    res.status(200).json({ message: 'Employee deleted successfully', data: deletedEmployee });
+  } catch (error) {
+    console.error('Error deleting employee:', error);
+    res.status(500).json({ message: 'Failed to delete employee' });
   }
 });
 
