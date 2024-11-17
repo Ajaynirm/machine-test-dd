@@ -3,14 +3,22 @@ import cors from 'cors';
 import startDBServer from '../database/connectDb.js';
 import t_Employee from '../model/employee.js'
 import t_login from '../model/login.js'
+import session from 'express-session'
 
 const app=express();
 
 app.use(cors());
 app.use(express.json()); 
+app.use(session({
+  secret:'hi',
+  resave: false,
+  saveUninitialized: false,
+}));
 
 app.get('/', (req,res) => {
+   req.session.isAuth = true;
     res.send('Hello World');
+    console.log(req.session);
 })
 app.post('/addAdmin', async (req,res) => {
   const { t_userName , t_Pwd} = req.body;
